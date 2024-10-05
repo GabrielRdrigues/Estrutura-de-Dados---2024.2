@@ -28,7 +28,7 @@ arvore* LerArvore(FILE* arq) {
 
 void imprimir_pre_ordem(arvore* a){
     if(a!=NULL){
-        printf("%d\n",a->info);
+        printf("%d ",a->info);
         imprimir_pre_ordem(a->esq);
         imprimir_pre_ordem(a->dir);
     }
@@ -37,7 +37,7 @@ void imprimir_pre_ordem(arvore* a){
 void imprimir_em_ordem(arvore* a){
     if(a!=NULL){
         imprimir_em_ordem(a->esq);
-        printf("%d\n",a->info);
+        printf("%d ",a->info);
         imprimir_em_ordem(a->dir);
     }
 }
@@ -46,7 +46,7 @@ void imprimir_pos_ordem(arvore* a){
     if(a!=NULL){
         imprimir_pos_ordem(a->esq);
         imprimir_pos_ordem(a->dir);
-        printf("%d\n",a->info);
+        printf("%d ",a->info);
     }
 }
 
@@ -92,17 +92,19 @@ void free_tree(arvore* root){
 
 int main() {
 
-    arvore* a;
+    arvore* a=NULL;
     FILE* arq;
+    char nome[20];
     int escolha=0;
 
     while(escolha!=6){
+        puts("\n1 - Ler arvore\n2 - Imprimir arvore \n3 - Busca elemento\n4 - Contagem de nós\n5 - Nós folhas\n6 - Sair");
         scanf("%d",&escolha);
         switch(escolha){
             case 1:
-                char nome[20];
+                puts("digite o nome do arquivo no formato: NomeArquivo.txt\n");
                 scanf("%s",nome);
-                arq=fopen(nome,"r");
+                arq=fopen(nome,"rt");
                 a = LerArvore(arq);
                 fclose(arq);
                 puts("Arvore lida com sucesso");
@@ -129,7 +131,7 @@ int main() {
                 break;
             case 4:
                 int aux = contar_numero_elementos(a);
-                printf("o numero de elementos na arvore eh [%d]\n",aux);
+                printf("o numero de nós na arvore eh [%d]\n",aux);
                 break;
             case 5:
                 nos_folhas(a);
