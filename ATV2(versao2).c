@@ -110,7 +110,8 @@ int altura(arvore* a) {
 
 int balanceada(arvore* a) {
     if (a!=NULL) {
-        if (1 >= (altura(a->esq) - altura(a->dir)) >= -1) {
+        int dif = (altura(a->esq) - altura(a->dir));
+        if (dif >= -1 && dif <= 1) {
             if (balanceada(a->esq) == 0) {
                 return 0;
             }
@@ -123,7 +124,7 @@ int balanceada(arvore* a) {
             return 0;
         }
     }
-    return 1;
+    else return 1;
 }
 
 void free_tree(arvore* root){
@@ -141,7 +142,7 @@ int main() {
     char nome[20];
     int escolha=0;
 
-    while(escolha!=6){
+    while(escolha!=9){
         puts("\n1 - Ler arvore\n2 - Imprimir arvore \n3 - Busca elemento\n4 - Contagem de nos\n5 - Nos folhas\n6 - Verificar se a arvore esta balanceada\n7 - Verificar se a arvore e cheia\n8 - Imprimir o nivel de um no X\n9 - Sair");
         scanf("%d",&escolha);
         switch(escolha){
@@ -181,10 +182,10 @@ int main() {
                 nos_folhas(a);
                 break;
             case 6:
-                if (balanceada(a))
-                    printf("Esta arvore esta balanceada");
-                else
+                if (balanceada(a) == 0)
                     printf("Esta arvore nao esta balanceada");
+                else
+                    printf("Esta arvore esta balanceada");
                 break;
             case 8:
                 int x;
