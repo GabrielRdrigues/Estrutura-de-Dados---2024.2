@@ -1,6 +1,7 @@
-
+// Gabriel Rodrigues Marques Valim e Nuno Martins Do Couto
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 typedef struct arvore {
     int info;
@@ -83,56 +84,85 @@ void nos_folhas(arvore* a){
 
 }
 
-void imprime_nível_de_x(arvore* a, int count, int x) {
-    if (a!=NULL) {
-        if (a->info == x) {
-            printf("O nivel do no %d e: %d", x, count);
-        }
-        else {
-            imprime_nível_de_x(a->esq, count+1, x);
-            imprime_nível_de_x(a->dir, count+1, x);
-        }
-    }
+arvore* free_tree(arvore* raiz){
+   if(raiz != NULL){
+       raiz->esq=free_tree(raiz->esq);
+       raiz->dir=free_tree(raiz->dir);
+       free(raiz);
+   }
+   return NULL;
 }
 
-int altura(arvore* a) {
-    if (a==NULL)
+int Imprimir_nivel_no_x(arvore* a, int nivel, int x) {
+    if(a!=NULL) {
+        if(a->info != x) {
+            int aux = Imprimir_nivel_no_x(a->esq,nivel+1,x);
+            if(aux!=-1)
+                return aux;
+            aux = Imprimir_nivel_no_x(a->dir,nivel+1,x);
+            if(aux!=-1)
+                return aux;
+            return -1;
+        }else {
+            return nivel;
+        }
+    }
+    return -1;
+}
+
+int altura(arvore* a){
+    if(a==NULL)
         return 0;
-    else {
+    else{
         int he = altura(a->esq);
         int hd = altura(a->dir);
-        if(he > hd)
+        if(he>hd)
             return he+1;
         else
             return hd+1;
     }
 }
 
-int balanceada(arvore* a) {
-    if (a!=NULL) {
-        int dif = (altura(a->esq) - altura(a->dir));
-        if (dif >= -1 && dif <= 1) {
-            if (balanceada(a->esq) == 0) {
-                return 0;
-            }
-            else if (balanceada(a->dir) == 0) {
-                return 0;
-            }
-            else return 1;
-        }
-        else {
-            return 0;
-        }
+int balanceamento(arvore* a){
+    if(a==NULL)
+        return 0;
+    else{
+        int aux1= altura(a->esq); 
+        int aux2= altura(a->dir); 
+        if(aux1 - aux2 > 1 || aux1 - aux2 <-1)
+            return -1;
+        if(balanceamento(a->esq) == -1 || balanceamento(a->dir) == -1) 
+            return -1;
     }
-    else return 1;
 }
 
-void free_tree(arvore* root){
-   if(root != NULL){
-       free_tree(root->esq);
-       free_tree(root->dir);
-       free(root);
-   }
+void imprimir_nivel(arvore *a,int cont,int nivel){
+    if(a!=NULL){  // NULL?
+        if(cont==nivel)
+            printf("%d ",a->info); // Raiz
+        else{
+            imprimir_nivel(a->esq,cont+1,nivel);
+            imprimir_nivel(a->dir,cont+1,nivel);
+        }
+    }
+}
+
+void largura(arvore* a, int cont, const int altura){
+    if(cont<=altura){
+        imprimir_nivel(a,0,cont);
+        largura(a,cont+1,altura);
+    }
+}
+
+int arvore_cheia(arvore* a,int cont,int n){
+    if(a==NULL)
+        return 0;
+    else{
+        if(cont==n)
+            return 1;
+        else
+            return arvore_cheia(a->esq,cont+1,n) + arvore_cheia(a->dir,cont+1,n);
+    }
 }
 
 int main() {
@@ -141,13 +171,14 @@ int main() {
     FILE* arq;
     char nome[20];
     int escolha=0;
-
+    puts("Gabriel Rodrigues Marques Valim E Nuno Martins Do Couto");
     while(escolha!=9){
-        puts("\n1 - Ler arvore\n2 - Imprimir arvore \n3 - Busca elemento\n4 - Contagem de nos\n5 - Nos folhas\n6 - Verificar se a arvore esta balanceada\n7 - Verificar se a arvore e cheia\n8 - Imprimir o nivel de um no X\n9 - Sair");
+        puts("\n1 - Ler arvore\n2 - Imprimir arvore \n3 - Busca elemento\n4 - Contagem de nós\n5 - Nós folhas");
+        puts("6- Verificar balanceamento\n7- Verificar se é cheia\n8- Imprimir o nível de um nó X\n9- Sair");
         scanf("%d",&escolha);
         switch(escolha){
             case 1:
-                puts("digite o nome do arquivo no formato: NomeArquivo.txt\n");
+                puts("Digite o nome do arquivo no formato: NomeArquivo.txt");
                 scanf("%s",nome);
                 arq=fopen(nome,"rt");
                 a = LerArvore(arq);
@@ -155,7 +186,7 @@ int main() {
                 puts("Arvore lida com sucesso");
                 break;
             case 2:
-                printf("\tPre ordem pressione 1\n \tEm ordem pressione 2\n \tPos ordem pressione 3\n");
+                printf("\tPré ordem pressione 1\n \tEm ordem pressione 2\n \tposordem pressione 3\nPorLargura pressione 4\n");
                 int escolha2=0;
                 scanf("%d",&escolha2);
                 if(escolha2==1)
@@ -164,6 +195,11 @@ int main() {
                     imprimir_em_ordem(a);
                 if(escolha2==3)
                     imprimir_pos_ordem(a);
+                if(escolha2==4){
+                    puts("arvore por largura:");
+                    int auxiliar4 = altura(a);
+                    largura(a,0,auxiliar4-1);
+                }
                 break;
             case 3:
                 int elemento;
@@ -182,26 +218,41 @@ int main() {
                 nos_folhas(a);
                 break;
             case 6:
-                if (balanceada(a) == 0)
-                    printf("Esta arvore nao esta balanceada");
-                else
-                    printf("Esta arvore esta balanceada");
+                int auxiliar = balanceamento(a);
+                if(auxiliar!=-1){
+                    printf("balanceada\n");
+                }
+                else{
+                    printf("nao balanceada");
+                }
                 break;
+            case 7:
+                int h = altura(a);
+                if(arvore_cheia(a,0,h-1)== pow(2,h-1))
+                    puts("é cheia");
+                else
+                    puts("nao eh cheia");
+               // Verificar se a árvore é cheia
+               break;
             case 8:
-                int x;
-                printf("Escolha o no que deseja saber o nivel: ");
-                scanf("%d", &x);
-                imprime_nível_de_x(a, 0, x);
+                int escolha3;
+                puts("Qual número quer saber o nível:");
+                scanf("%d",&escolha3);
+                int b = Imprimir_nivel_no_x(a,0,escolha3);
+                if(b>=0)
+                    printf("o nível eh %d\n",b);
+                else
+                    puts("nao existe na arvore");
                 break;
             case 9:
                 printf("Saiu, obrigado por usar nosso programa\n");
                 break;
             default:
-                puts("Opcao invalida, digite outra\n");
+                puts("Opção inválida, digite outra\n");
                 break;
         }
     }
 
-    free_tree(a);
+    a=free_tree(a);
     return 0;
 }
