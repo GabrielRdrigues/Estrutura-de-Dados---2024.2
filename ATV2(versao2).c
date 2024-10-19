@@ -75,7 +75,7 @@ int contar_numero_elementos(arvore* a){
 void nos_folhas(arvore* a){
     if(a!=NULL){
         if(a->dir==NULL && a->esq==NULL)
-            printf("no [%d] é folha\n",a->info);
+            printf("O nó [%d] é folha\n",a->info);
         else{
             nos_folhas(a->esq);
             nos_folhas(a->dir);
@@ -171,9 +171,9 @@ int main() {
     FILE* arq;
     char nome[20];
     int escolha=0;
-    puts("Gabriel Rodrigues Marques Valim E Nuno Martins Do Couto");
+    puts("Gabriel Rodrigues Marques Valim e Nuno Martins do Couto");
     while(escolha!=9){
-        puts("\n1 - Ler arvore\n2 - Imprimir arvore \n3 - Busca elemento\n4 - Contagem de nós\n5 - Nós folhas");
+        puts("\n1 - Ler árvore\n2 - Imprimir árvore \n3 - Buscar elemento\n4 - Contagem de nós\n5 - Nós folhas");
         puts("6- Verificar balanceamento\n7- Verificar se é cheia\n8- Imprimir o nível de um nó X\n9- Sair");
         scanf("%d",&escolha);
         switch(escolha){
@@ -220,29 +220,29 @@ int main() {
             case 6:
                 int auxiliar = balanceamento(a);
                 if(auxiliar!=-1){
-                    printf("balanceada\n");
+                    printf("Balanceada\n");
                 }
                 else{
-                    printf("nao balanceada");
+                    printf("Não balanceada");
                 }
                 break;
             case 7:
                 int h = altura(a);
                 if(arvore_cheia(a,0,h-1)== pow(2,h-1))
-                    puts("é cheia");
+                    puts("A árvore é cheia");
                 else
-                    puts("nao eh cheia");
+                    puts("A árvore não é cheia");
                // Verificar se a árvore é cheia
                break;
             case 8:
                 int escolha3;
-                puts("Qual número quer saber o nível:");
+                puts("Qual número deseja saber o nível:");
                 scanf("%d",&escolha3);
                 int b = Imprimir_nivel_no_x(a,0,escolha3);
                 if(b>=0)
-                    printf("o nível eh %d\n",b);
+                    printf("O nível é %d\n",b);
                 else
-                    puts("nao existe na arvore");
+                    puts("Não existe na árvore");
                 break;
             case 9:
                 printf("Saiu, obrigado por usar nosso programa\n");
