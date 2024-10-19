@@ -186,7 +186,7 @@ int main() {
                 puts("Arvore lida com sucesso");
                 break;
             case 2:
-                printf("\tPré ordem pressione 1\n \tEm ordem pressione 2\n \tposordem pressione 3\nPorLargura pressione 4\n");
+                printf("\tPré ordem pressione 1\n \tEm ordem pressione 2\n \tposordem pressione 3\n \tPorLargura pressione 4\n");
                 int escolha2=0;
                 scanf("%d",&escolha2);
                 if(escolha2==1)
