@@ -275,9 +275,11 @@ int main() {
                 a = inserir_elemento(a,aux6);
                 break;
             case 7:
-                // Remover um nó
-
-               break;
+                puts("Qual elemento quer remover?");
+                int aux7;
+                scanf("%d",&aux7);
+                a = remover_no(a,aux7);
+                break;
             case 8:
                 printf("Saiu, obrigado por usar nosso programa\n");
                 break;
