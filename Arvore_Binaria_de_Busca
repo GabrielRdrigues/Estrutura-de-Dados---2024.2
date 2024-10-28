@@ -160,7 +160,7 @@ arvore* inserir_elemento(arvore* a,int x){
         node->dir = NULL;
         return node;
     }else{
-        if(a->info <= x)    
+        if(a->info >= x)    
            a->esq = inserir_elemento(a->esq,x);
         else
            a->dir = inserir_elemento(a->dir,x);
@@ -171,11 +171,38 @@ arvore* inserir_elemento(arvore* a,int x){
 
 // ----------------Remover um nó-----------------
 
-//arvore* remover_no(arvore* a,int x){
-//
-//}
+arvore* remover_no(arvore* a,int x){
+    if (a == NULL) {
+        printf("O nó [%d] não existe nessa árvore", x);
+        return NULL;
+    } else if (a->info == x) {
+        if (a->esq==NULL && a->dir==NULL) {
+            free(a);
+            return NULL;
+        } else if (a->esq == NULL) {
+            arvore* aux = a->dir;
+            free(a);
+            return aux;
+        } else if (a->dir == NULL) {
+            arvore* aux = a->esq;
+            free(a);
+            return aux;
+        } else {
+            arvore* aux = a->esq;
+            while (aux->dir != NULL) {
+                aux = aux->dir;
+            }
+            a->info = aux->info;
+            a->esq = remover_no(a->esq, aux->info);
+        }
+    } else if (a->info > x)
+        a->esq = remover_no(a->esq, x);
+    else
+        a->dir = remover_no(a->dir, x);
+    return a;
+}
 
-// --------------- Remover um nó -------------
+// --------------------------------------------
 
 
 
