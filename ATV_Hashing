@@ -110,11 +110,11 @@ int main(void)
             case 1:
                 aluno a;
                 printf("Informe o nome deste aluno: \n");
-                scanf(" %50[^\n]", &a.nome);
+                scanf(" %50[^\n]", a.nome);
                 printf("Informe a matrícula deste aluno (ex: 223060063): \n");
                 scanf("%d", &a.mat);
                 printf("Informe o curso deste aluno: \n");
-                scanf(" %50[\n]", &a.curso);
+                scanf(" %50[^\n]", a.curso);
                 inserir(nomeArq, a);
                 printf("Aluno inserido!\n\n");
                 break;
@@ -122,7 +122,7 @@ int main(void)
             case 2:
                 printf("Informe a matrícula do aluno (ex: 223060069): \n");
                 int matricula;
-                scanf("%d", matricula);
+                scanf("%d",&matricula);
                 imprime_aluno(nomeArq, matricula);
             break;
 
