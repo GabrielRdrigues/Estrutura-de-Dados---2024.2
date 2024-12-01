@@ -101,7 +101,7 @@ int main(void)
     int opcao=0;
 
     while (opcao != 4) {
-        printf("Escolha uma opção:\n1-Inserir um Novo Aluno\n2-Imprimir as informações de um aluno\n3-Imprimir a tabela Hash\n4-Sair\n");
+        printf("\nEscolha uma opção:\n1-Inserir um Novo Aluno\n2-Imprimir as informações de um aluno\n3-Imprimir a tabela Hash\n4-Sair\n");
         scanf("%d", &opcao);
 
         switch (opcao)
