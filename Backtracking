@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+
+void imprimir_combinacoes(int* vet, int pos, int n, int* aux) {
+    if (pos == n) {
+        int aux1=0;
+        for (int i=0; i<n; i++) {
+            aux1 = aux1 + vet[i];
+        }
+        if (aux1%2 == 0) {
+            for (int i=0; i<n; i++) {
+                printf(" %d ", vet[i]);
+            }
+            printf("    |   ");
+        }
+
+    }else {
+        for (int i=0; i<4; i++) {
+            vet[pos] = aux[i];
+            imprimir_combinacoes(vet, pos+1, n, aux);
+        }
+    }
+}
+int main(void) {
+    int aux[] = {15, 31, 55, 44};
+    int n=4;
+    int vet[n];
+    imprimir_combinacoes(vet, 0, n, aux);
+
+}
