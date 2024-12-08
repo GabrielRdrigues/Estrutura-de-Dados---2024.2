@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+
+void combinacao_centavos(int* vetor,int* vetor_auxiliar,int centavo,int n,int pos)
+{
+    int i;
+    if(pos==n)
+    {
+        int soma=0;
+        for(i=0;i<n;i++)
+        {
+            soma = soma + (vetor_auxiliar[i] * vetor[i]);
+        }
+        if(soma==centavo)
+        {
+            for(i=0;i<n;i++)
+                printf("[%d] de %d ",vetor[i],vetor_auxiliar[i]);
+            puts("");
+        }
+ 
+    }
+    else
+    {
+        for(i=0;i<centavo;i++){
+            vetor[pos]= i;
+            combinacao_centavos(vetor,vetor_auxiliar,centavo,n,pos+1);
+        }
+    }
+    
+
+
+}
+
+
+int main(){
+    int vetor_auxiliar[5]={1,5,10,25,50};
+    int vetor[5]={0,0,0,0,0};
+    combinacao_centavos(vetor,vetor_auxiliar,12,5,0);
+}
