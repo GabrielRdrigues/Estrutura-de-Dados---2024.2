@@ -19,7 +19,7 @@ void combinação_aei(char* v,char* v_aux,int n,int pos)
     }
     else
     {
-        for(i=0;i<n;i++)
+        for(i=0;i<3;i++)
         {
             v[pos]=v_aux[i];
             combinação_aei(v,v_aux,n,pos+1);
