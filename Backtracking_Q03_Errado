@@ -14,26 +14,29 @@ void combinacao_centavos(int* vetor,int* vetor_auxiliar,int centavo,int n,int po
         if(soma==centavo)
         {
             for(i=0;i<n;i++)
-                printf("[%d] de %d ",vetor[i],vetor_auxiliar[i]);
+                printf("[%d] de %d \n",vetor[i],vetor_auxiliar[i]);
             puts("");
         }
- 
+
     }
     else
     {
-        for(i=0;i<centavo;i++){
+        for(i=0;i<=centavo;i++){
             vetor[pos]= i;
             combinacao_centavos(vetor,vetor_auxiliar,centavo,n,pos+1);
         }
     }
-    
+
 
 
 }
 
 
 int main(){
-    int vetor_auxiliar[5]={1,5,10,25,50};
+    int vetor_auxiliar[5]={50,25,10,5,1};
     int vetor[5]={0,0,0,0,0};
-    combinacao_centavos(vetor,vetor_auxiliar,12,5,0);
+    printf("Digite o valor em centavos: ");
+    int centavos;
+    scanf("%d", &centavos);
+    combinacao_centavos(vetor,vetor_auxiliar,centavos,5,0);
 }
