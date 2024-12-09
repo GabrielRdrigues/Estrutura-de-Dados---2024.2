@@ -23,7 +23,9 @@ void imprimir_combinacoes(int* vet, int pos, int n, int* aux) {
 }
 int main(void) {
     int aux[] = {15, 31, 55, 44};
-    int n=4;
+    int n;
+    printf("Digite o tamanho da combinação: ");
+    scanf("%d", &n);
     int vet[n];
     imprimir_combinacoes(vet, 0, n, aux);
 
