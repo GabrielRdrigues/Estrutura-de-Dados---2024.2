@@ -11,7 +11,7 @@ void imprimir_combinacoes(int* vet, int pos, int n, int* aux) {
             for (int i=0; i<n; i++) {
                 printf(" %d ", vet[i]);
             }
-            printf("    |   ");
+            printf("\n");
         }
 
     }else {
@@ -28,5 +28,4 @@ int main(void) {
     scanf("%d", &n);
     int vet[n];
     imprimir_combinacoes(vet, 0, n, aux);
-
 }
