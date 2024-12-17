@@ -123,6 +123,42 @@ void grafo_completo_verifica(lista** g,int n)
     puts("é completo");
 }
 
+
+int existe(int *vet,int valor,int n)
+{
+    int i;
+    for(i=0;i<n;i++)
+        if(vet[i]==valor)
+            return 1;
+    return 0;
+}
+
+
+void caminhos(lista** g,int b,int* vet, int pos) // b = destino
+{
+    if(vet[pos-1]==b)
+    {
+        int i;
+        puts("");
+        for(i=0;i<pos;i++)
+            printf("%d ",vet[i]);
+    }
+    else
+    {
+        lista* p =g[vet[pos-1]];
+        while(p!=NULL)
+        {
+            if(!existe(vet,p->destino,pos))
+            {
+                vet[pos]=p->destino;
+                caminhos(g,b,vet,pos+1);
+            }
+            p=p->prox;
+        }
+    }
+}
+
+
 void inicializar (lista **g, int n){
     int i;
     for(i=0;i<=n;i+1){
