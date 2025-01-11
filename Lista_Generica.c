@@ -108,6 +108,27 @@ int contaAlunos(Pessoa* p,int pos, const char curso[20]) {
     return cont;
 }
 
+void maiorSalario(Pessoa* p, int pos) {
+    float maior_salario = 0;
+    for (int i=0; i<pos; i++) {
+        if(p[i].tipo==1) {
+            Professor* f = (Professor*)p[i].item;
+            if (f->salario > maior_salario)
+                maior_salario = f->salario;
+        }
+    }
+
+    for (int i=0; i<pos; i++) {
+        if(p[i].tipo==1) {
+            Professor* f = (Professor*)p[i].item;
+            if (f->salario == maior_salario) {
+                printf("Segue os professores com salário igual a %.2f\n", maior_salario);
+                imprimeProfessor(f);
+            }
+        }
+    }
+}
+
 
 enum escolha {
     Inserir,
@@ -190,13 +211,12 @@ int main(void) {
 
                 break;
             case Imprimir:
-
+                maiorSalario(p, pos);
                 break;
             case Sair:
-
                 break;
             default:
-                puts("opcao errada");
+                puts("Opcao errada");
         }
     }
 }
