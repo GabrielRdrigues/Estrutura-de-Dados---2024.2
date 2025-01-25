@@ -106,6 +106,38 @@ void Imprimir_Grafo(Grafo G)
     }
 }
 
+int conta_origem(lista* l) {
+    int count = 0;
+    lista* aux = l;
+    while(aux != NULL) {
+        count++;
+        aux = aux->prox;
+    }
+    return count;
+}
+
+int conta_vertice(lista* l, int vertice) {
+    int count = 0;
+    lista* aux = l;
+    while (aux != NULL) {
+        if (aux->destino == vertice)
+            count++;
+        aux = aux->prox;
+    }
+    return count;
+}
+
+int Grau_Vertice(Grafo G,int vertice) {
+    int count = 0;
+    for (int i=1; i<=G->n; i++) {
+        if (i==vertice) {
+            count += conta_origem(G->g[i]);
+        }
+        count += conta_vertice(G->g[i], vertice);
+    }
+    return count;
+}
+
 void* procura_lista(lista* l,int destino)
 {
     lista* aux = l;
