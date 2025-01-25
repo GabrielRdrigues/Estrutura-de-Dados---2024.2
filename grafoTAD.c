@@ -1,3 +1,4 @@
+
 #include "grafoTAD.h"
 #include <stdio.h>
 #include <string.h>
@@ -19,10 +20,13 @@ struct grafo
 
 Grafo Inicializar()
 {
-    Grafo grapho = (Grafo) malloc(sizeof(Grafo));
-    grapho->n=10;
-    grapho->g = (lista**)malloc(((grapho->n)+1)*sizeof(lista*));
-    return grapho;
+    Grafo g = (Grafo) malloc(sizeof(Grafo));
+    g->n=10;
+    g->g = (lista**)malloc(((g->n)+1)*sizeof(lista*));
+    for (int i=1; i<=g->n; i++) {
+        g->g[i] = NULL;
+    }
+    return g;
 }
 
 void free_list(lista* head){
@@ -40,24 +44,24 @@ Grafo Destruir(Grafo G)
     }
 }
 
-lista* inserirLista(lista* l,int chave,void* custo,int SizeObj)
+lista* inserirLista(lista* l,int destino,void* custo,int SizeObj)
 {
     lista* aux = (lista*)malloc(sizeof(lista));
     aux->custo = malloc(SizeObj);
     memcpy(aux->custo,custo,SizeObj);
-    aux->destino = chave;
+    aux->destino = destino;
     aux->prox = l;
     return aux;
 }
 
-void Inserir_Aresta(Grafo G,int chave /*chave=destino*/,void* custo,int SizeObj,int origem)
+void Inserir_Aresta(Grafo G,int destino /*chave=destino*/,void* custo,int SizeObj,int origem)
 {
-    G->g[origem] = inserirLista(G->g[origem],chave,custo,SizeObj);
+    G->g[origem] = inserirLista(G->g[origem],destino,custo,SizeObj);
 }
 
 lista* removerLista(lista* l,int destino,void* custo,int SizeObj)
 {
-    if(l->destino=destino)
+    if(l->destino==destino)
     {
         lista* aux = l->prox;
         memcpy(custo,l->custo,SizeObj);
@@ -76,7 +80,8 @@ lista* removerLista(lista* l,int destino,void* custo,int SizeObj)
             free(n->custo);
             free(n);
         }
-        p=p->prox;
+        p = n;
+        n = n->prox;
     }
     return l;
 }
@@ -88,11 +93,11 @@ void Remover_Aresta(Grafo G,void* custo,int SizeObj,int origem,int destino)
 
 void imprimir_lista(lista* l)
 {
-    lista* auxiliar = l;
-    while(auxiliar!=NULL)
+    lista* aux = l;
+    while(aux!=NULL)
     {
-        printf("Destino:[%d] ",auxiliar->destino);
-        auxiliar=auxiliar->prox;
+        printf("Destino:[%d] ",aux->destino);
+        aux=aux->prox;
     }
 }
 
